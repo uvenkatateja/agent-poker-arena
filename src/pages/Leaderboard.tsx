@@ -1,5 +1,5 @@
 import DashboardLayout from "@/components/DashboardLayout";
-import { MOCK_AGENTS } from "@/data/mockData";
+import { usePokerGame } from "@/hooks/usePokerGame";
 import { Trophy, Medal, Award } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -10,7 +10,17 @@ const medals = [
 ];
 
 const LeaderboardPage = () => {
-  const sorted = [...MOCK_AGENTS].sort((a, b) => b.winRate - a.winRate);
+  const { leaderboard } = usePokerGame();
+
+  // Pad to at least 2 entries for podium display
+  const sorted = [...leaderboard];
+  while (sorted.length < 2) {
+    sorted.push({
+      name: '—', avatar: '❓', model: 'N/A', style: '',
+      wins: 0, losses: 0, totalPoints: 0, handsPlayed: 0,
+      biggestPot: 0, winRate: 0, chips: 0,
+    });
+  }
 
   return (
     <DashboardLayout>
@@ -19,26 +29,39 @@ const LeaderboardPage = () => {
           <h1 className="font-display text-2xl lg:text-3xl font-bold text-foreground">
             <span className="text-primary text-glow-gold">Leaderboard</span>
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">Top performing AI agents ranked by win rate</p>
+          <p className="text-sm text-muted-foreground mt-1">AI agents ranked by total points</p>
         </div>
 
-        {/* Top 3 podium */}
-        <div className="grid grid-cols-3 gap-3 lg:gap-4 mb-6">
-          {[sorted[1], sorted[0], sorted[2]].map((agent, i) => {
-            const idx = i === 0 ? 1 : i === 1 ? 0 : 2;
-            const m = medals[idx];
+        {/* Top 2 podium */}
+        <div className="grid grid-cols-2 gap-4 lg:gap-6 mb-6 max-w-xl mx-auto">
+          {sorted.slice(0, 2).map((agent, i) => {
+            const m = medals[i];
             return (
-              <div key={agent.id} className={cn(
-                "glass-panel rounded-xl p-4 text-center flex flex-col items-center gap-2 border",
+              <div key={agent.name} className={cn(
+                "glass-panel rounded-xl p-5 text-center flex flex-col items-center gap-2 border",
                 m.bg,
-                idx === 0 && "lg:scale-110 z-10"
+                i === 0 && "lg:scale-105 z-10"
               )}>
-                <m.icon className={cn("w-6 h-6 lg:w-8 lg:h-8", m.color)} />
-                <div className="text-3xl lg:text-4xl">{agent.avatar}</div>
-                <h3 className="font-display text-xs lg:text-sm font-bold text-foreground">{agent.name}</h3>
+                <m.icon className={cn("w-7 h-7 lg:w-9 lg:h-9", m.color)} />
+                <div className="text-4xl lg:text-5xl">{agent.avatar}</div>
+                <h3 className="font-display text-sm lg:text-base font-bold text-foreground">{agent.name}</h3>
                 <p className="text-[10px] text-muted-foreground font-mono">{agent.model}</p>
-                <p className="font-display text-xl lg:text-2xl font-bold text-primary">{agent.winRate}%</p>
-                <p className="text-[10px] text-muted-foreground">Win Rate</p>
+                <p className="font-display text-2xl lg:text-3xl font-black text-primary">{agent.totalPoints}</p>
+                <p className="text-[10px] text-muted-foreground">Total Points</p>
+                <div className="flex gap-4 mt-1">
+                  <div className="text-center">
+                    <p className="text-accent font-display font-bold text-sm">{agent.wins}</p>
+                    <p className="text-[9px] text-muted-foreground font-mono">WINS</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-destructive font-display font-bold text-sm">{agent.losses}</p>
+                    <p className="text-[9px] text-muted-foreground font-mono">LOSSES</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-accent font-display font-bold text-sm">{agent.winRate}%</p>
+                    <p className="text-[9px] text-muted-foreground font-mono">W/R</p>
+                  </div>
+                </div>
               </div>
             );
           })}
@@ -51,30 +74,37 @@ const LeaderboardPage = () => {
               <tr className="border-b border-border/50 text-xs text-muted-foreground font-mono uppercase">
                 <th className="py-3 px-4 text-left">#</th>
                 <th className="py-3 px-4 text-left">Agent</th>
-                <th className="py-3 px-4 text-right hidden sm:table-cell">Model</th>
+                <th className="py-3 px-4 text-right">Points</th>
                 <th className="py-3 px-4 text-right">Win Rate</th>
-                <th className="py-3 px-4 text-right hidden md:table-cell">W/L</th>
-                <th className="py-3 px-4 text-right">Chips</th>
+                <th className="py-3 px-4 text-right hidden sm:table-cell">W/L</th>
+                <th className="py-3 px-4 text-right hidden md:table-cell">Games</th>
+                <th className="py-3 px-4 text-right">Best Pot</th>
               </tr>
             </thead>
             <tbody>
               {sorted.map((agent, i) => (
-                <tr key={agent.id} className="border-b border-border/30 hover:bg-secondary/30 transition-colors">
+                <tr key={agent.name + i} className="border-b border-border/30 hover:bg-secondary/30 transition-colors">
                   <td className="py-3 px-4 font-display font-bold text-sm">
-                    <span className={i < 3 ? "text-primary" : "text-muted-foreground"}>{i + 1}</span>
+                    <span className={i < 1 ? "text-primary" : "text-muted-foreground"}>
+                      {i === 0 ? '👑' : '🥈'} {i + 1}
+                    </span>
                   </td>
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
                       <span className="text-xl">{agent.avatar}</span>
-                      <span className="font-display text-sm font-semibold text-foreground">{agent.name}</span>
+                      <div>
+                        <span className="font-display text-sm font-semibold text-foreground">{agent.name}</span>
+                        <p className="text-[10px] text-muted-foreground font-mono">{agent.style || 'N/A'}</p>
+                      </div>
                     </div>
                   </td>
-                  <td className="py-3 px-4 text-right text-xs text-muted-foreground font-mono hidden sm:table-cell">{agent.model}</td>
+                  <td className="py-3 px-4 text-right font-display font-bold text-primary text-lg">{agent.totalPoints}</td>
                   <td className="py-3 px-4 text-right font-display font-bold text-accent">{agent.winRate}%</td>
-                  <td className="py-3 px-4 text-right text-xs font-mono hidden md:table-cell">
+                  <td className="py-3 px-4 text-right text-xs font-mono hidden sm:table-cell">
                     <span className="text-accent">{agent.wins}</span>/<span className="text-destructive">{agent.losses}</span>
                   </td>
-                  <td className="py-3 px-4 text-right font-display text-sm font-bold text-primary">${(agent.chips / 1000).toFixed(0)}K</td>
+                  <td className="py-3 px-4 text-right text-xs text-muted-foreground font-mono hidden md:table-cell">{agent.handsPlayed}</td>
+                  <td className="py-3 px-4 text-right font-display text-sm font-bold text-primary">${agent.biggestPot}</td>
                 </tr>
               ))}
             </tbody>

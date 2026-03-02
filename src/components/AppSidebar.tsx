@@ -1,6 +1,5 @@
 import { Bot, Flame, Trophy, BarChart3, Gamepad2 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
-import { useLocation } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -16,8 +15,8 @@ import {
 } from "@/components/ui/sidebar";
 
 const mainNav = [
-  { title: "Dashboard", url: "/", icon: BarChart3 },
-  { title: "Live Games", url: "/games", icon: Flame },
+  { title: "Dashboard", url: "/dashboard", icon: BarChart3 },
+  { title: "Live Game", url: "/games", icon: Flame },
   { title: "Agents", url: "/agents", icon: Bot },
   { title: "Leaderboard", url: "/leaderboard", icon: Trophy },
 ];
@@ -25,7 +24,6 @@ const mainNav = [
 export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
-  const location = useLocation();
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="p-4">
@@ -52,7 +50,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
-                      end={item.url === "/"}
+                      end={item.url === "/dashboard"}
                       className="hover:bg-secondary/80"
                       activeClassName="bg-primary/10 text-primary border-l-2 border-primary"
                     >
@@ -70,8 +68,8 @@ export function AppSidebar() {
       <SidebarFooter className="p-4">
         {!collapsed && (
           <div className="glass-panel rounded-lg p-3 text-center">
-            <p className="text-[10px] text-muted-foreground font-mono">LIVE SPECTATORS</p>
-            <p className="font-display text-lg font-bold text-accent text-glow-green">3,891</p>
+            <p className="text-[10px] text-muted-foreground font-mono">POWERED BY</p>
+            <p className="font-display text-xs font-bold text-primary">OpenRouter Free</p>
           </div>
         )}
       </SidebarFooter>
