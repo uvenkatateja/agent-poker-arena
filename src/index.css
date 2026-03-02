@@ -1,96 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 220 20% 6%;
+    --foreground: 45 10% 90%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 18% 10%;
+    --card-foreground: 45 10% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 18% 10%;
+    --popover-foreground: 45 10% 90%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 45 100% 50%;
+    --primary-foreground: 220 20% 6%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 15% 16%;
+    --secondary-foreground: 45 10% 85%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 15% 14%;
+    --muted-foreground: 220 10% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 142 70% 45%;
+    --accent-foreground: 220 20% 6%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 45 100% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 220 20% 8%;
+    --sidebar-foreground: 45 10% 80%;
+    --sidebar-primary: 45 100% 50%;
+    --sidebar-primary-foreground: 220 20% 6%;
+    --sidebar-accent: 220 15% 14%;
+    --sidebar-accent-foreground: 45 10% 90%;
+    --sidebar-border: 220 15% 15%;
+    --sidebar-ring: 45 100% 50%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom tokens */
+    --gold: 45 100% 50%;
+    --gold-dim: 45 80% 35%;
+    --neon-green: 142 70% 45%;
+    --neon-green-dim: 142 50% 30%;
+    --felt-green: 145 40% 18%;
+    --danger-red: 0 72% 51%;
+    --chip-blue: 210 80% 50%;
+    --chip-red: 0 70% 50%;
+    --chip-black: 220 20% 12%;
+    --surface-elevated: 220 18% 12%;
+    --surface-glass: 220 20% 10%;
+    --glow-gold: 0 0 30px hsl(45 100% 50% / 0.3);
+    --glow-green: 0 0 30px hsl(142 70% 45% / 0.3);
   }
 }
 
@@ -100,6 +68,96 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body antialiased;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-glow-gold {
+    text-shadow: 0 0 20px hsl(45 100% 50% / 0.5), 0 0 40px hsl(45 100% 50% / 0.2);
+  }
+
+  .text-glow-green {
+    text-shadow: 0 0 20px hsl(142 70% 45% / 0.5), 0 0 40px hsl(142 70% 45% / 0.2);
+  }
+
+  .border-glow-gold {
+    box-shadow: 0 0 15px hsl(45 100% 50% / 0.2), inset 0 0 15px hsl(45 100% 50% / 0.05);
+  }
+
+  .border-glow-green {
+    box-shadow: 0 0 15px hsl(142 70% 45% / 0.2), inset 0 0 15px hsl(142 70% 45% / 0.05);
+  }
+
+  .bg-felt {
+    background: radial-gradient(ellipse at center, hsl(145 40% 22%), hsl(145 40% 14%));
+  }
+
+  .bg-gradient-dark {
+    background: linear-gradient(180deg, hsl(220 20% 8%) 0%, hsl(220 20% 4%) 100%);
+  }
+
+  .bg-gradient-card {
+    background: linear-gradient(135deg, hsl(220 18% 12%) 0%, hsl(220 18% 8%) 100%);
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-card-deal {
+    animation: cardDeal 0.5s ease-out;
+  }
+
+  .animate-chip-bounce {
+    animation: chipBounce 0.6s ease-out;
+  }
+
+  .glass-panel {
+    @apply bg-card/80 backdrop-blur-xl border border-border/50;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px hsl(45 100% 50% / 0.2); }
+  50% { box-shadow: 0 0 40px hsl(45 100% 50% / 0.4), 0 0 60px hsl(45 100% 50% / 0.1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes cardDeal {
+  from { transform: translateY(-50px) rotateY(90deg); opacity: 0; }
+  to { transform: translateY(0) rotateY(0deg); opacity: 1; }
+}
+
+@keyframes chipBounce {
+  0% { transform: translateY(-30px) scale(0.8); opacity: 0; }
+  60% { transform: translateY(5px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(220 20% 6%);
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(220 15% 20%);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(45 100% 50% / 0.5);
 }
